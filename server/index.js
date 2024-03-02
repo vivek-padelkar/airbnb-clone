@@ -5,6 +5,7 @@ import express from 'express'
 import userRoute from './routes/user.routes.js'
 import cors from 'cors'
 import { connedctDb } from './db/dbconfig.js'
+// import { encrypt } from '../client/src/utils/utils.js'
 
 const app = express()
 app.use(cors())
@@ -21,6 +22,7 @@ const BASE_PATH = process.env.BASE_PATH
 connedctDb()
 
 app.use(`${BASE_PATH}/user`, userRoute)
+// app.use(encrypt)
 app.listen(PORT, () => {
   console.log('api server is running on PORT: ' + process.env.PORT)
 })

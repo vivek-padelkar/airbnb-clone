@@ -7,6 +7,7 @@ import PasswordCheckList from '../components/PasswordCheckList'
 import CryptoJS from 'crypto-js'
 const SECRET_KEY = import.meta.env.VITE_SECRET_KEY
 import { useNavigate } from 'react-router-dom'
+import axiosInstance from '../utils/axiosConfig'
 
 const Register = () => {
   const navigate = useNavigate()
@@ -37,11 +38,18 @@ const Register = () => {
         SECRET_KEY
       ).toString()
 
-      const { data } = await axios.post(
+      // const { data } = await axios.post(
+      //   '/user/register',
+      //   { data: encryptedRequestBody },
+      //   AXIOS_HEADER
+      // )
+
+      const { data } = await axiosInstance.post(
         '/user/register',
-        { data: encryptedRequestBody },
+        requestBody,
         AXIOS_HEADER
       )
+
       console.log(JSON.stringify(data))
       toast.success(data?.message)
       clearFields()

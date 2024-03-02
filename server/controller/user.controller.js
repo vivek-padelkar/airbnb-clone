@@ -5,29 +5,18 @@ import {
 } from '../validation/user.validation.js'
 import { decrypt } from '../middleware/encrypt.js'
 import bcrypt from 'bcryptjs'
+import { errorhandler, successhandler } from '../utils/responseHandler.js'
 
 export const registerUser = async (req, res) => {
   try {
-    if (req.body.data) {
-      let decrypedBody = decrypt(req.body.data)
-      decrypedBody = JSON.parse(decrypedBody)
-      await userValidationSchema(decrypedBody)
-      const { name, email, password } = decrypedBody
-      const response = await getUserRegitser(name, email, password)
-      if (response) {
-        res.send({
-          message: 'User register successfully',
-          userData: response,
-        })
-      }
-    } else {
-      throw Error('Schema missmacth')
+    await userValidationSchema(req.data)
+    const { name, email, password } = req.data
+    const response = await getUserRegitser(name, email, password)
+    if (response) {
+      successhandler(200, 'User register successfully', response, res)
     }
   } catch (error) {
-    res.status(500).send({
-      message: error.message || error,
-      status: 500,
-    })
+    errorhandler(500, error, res)
   }
 }
 5

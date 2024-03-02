@@ -9,7 +9,7 @@ import { ToastContainer } from 'react-toastify'
 import axios from 'axios'
 
 function App() {
-  axios.defaults.baseURL = 'http://localhost:5002/airbnb/api/v1'
+  
   return (
     <>
       <Routes>

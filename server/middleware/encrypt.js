@@ -1,10 +1,10 @@
 import CryptoJS from 'crypto-js'
 
 // Encrypt
-export const encrypt = (message) => {
+export const encrypt = (req, res, next) => {
   try {
     const encryptedMsg = CryptoJS.AES.encrypt(
-      message,
+      res,
       process.env.SECRET_KEY
     ).toString()
     return encryptedMsg
@@ -13,11 +13,12 @@ export const encrypt = (message) => {
   }
 }
 
-export const decrypt = (message) => {
+export const decrypt = (req, res, next) => {
   try {
-    const bytes = CryptoJS.AES.decrypt(message, process.env.SECRET_KEY)
-    const decryptedMsg = bytes.toString(CryptoJS.enc.Utf8)
-    return decryptedMsg
+    const bytes = CryptoJS.AES.decrypt(req.body.data, process.env.SECRET_KEY)
+    const decrypedBody = bytes.toString(CryptoJS.enc.Utf8)
+    req.data = JSON.parse(decrypedBody)
+    next()
   } catch (error) {
     throw Error('Error while decypting')
   }
