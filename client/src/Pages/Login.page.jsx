@@ -2,11 +2,13 @@ const SECRET_KEY = import.meta.env.VITE_SECRET_KEY
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import axios from 'axios'
 import CryptoJS from 'crypto-js'
 import { AXIOS_HEADER } from '../constants/constants'
+import axiosInstance from '../utils/axiosConfig'
+import { useNavigate } from 'react-router-dom'
 
 export const Login = () => {
+  const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
@@ -21,13 +23,9 @@ export const Login = () => {
         email,
         password,
       }
-      var encryptedRequestBody = CryptoJS.AES.encrypt(
-        JSON.stringify(requestBody),
-        SECRET_KEY
-      ).toString()
-      const { data } = await axios.post(
+      const { data } = await axiosInstance.post(
         '/user/login',
-        { data: encryptedRequestBody },
+        requestBody,
         AXIOS_HEADER
       )
       console.log(JSON.stringify(data))
@@ -35,7 +33,9 @@ export const Login = () => {
       clearFields()
       navigate('/')
     } catch (error) {
-      toast.error(error.message || error)
+      toast.error(
+        error?.response?.data?.message || 'Something went wrong try again !'
+      )
     }
   }
   return (

@@ -1,12 +1,13 @@
 import CryptoJS from 'crypto-js'
 
 // Encrypt
-export const encrypt = (req, res, next) => {
+export const encrypt = (message) => {
   try {
     const encryptedMsg = CryptoJS.AES.encrypt(
-      res,
+      JSON.stringify(message),
       process.env.SECRET_KEY
     ).toString()
+
     return encryptedMsg
   } catch (error) {
     throw Error('Error while encypting')

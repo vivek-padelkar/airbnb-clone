@@ -24,11 +24,16 @@ axiosInstance.interceptors.response.use(
     if (response.data) {
       response.data = JSON.parse(decrypt(response.data.data))
     }
-    
+
     return response
   },
   function (error) {
     return Promise.reject(error)
   }
 )
+
+// axiosInstance.interceptors.response.use(undefined, function (error) {
+//   // Handle error responses here
+//   return Promise.reject(error.response)
+// })
 export default axiosInstance

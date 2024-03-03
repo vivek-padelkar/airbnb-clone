@@ -7,9 +7,9 @@ const Header = () => {
       {/* LOGO */}
       <div className="logo-container gap-1">
         <div className="logo-continer__wrapper">
-          <img src={`images/airbnb.png`} className="logo-continer__logo" />
+          <img src={`images/logo.png`} className="logo-continer__logo" />
         </div>
-        <span className="font-bold text-xl">airbnb</span>
+        <span className="font-bold text-xl">VoyageViks</span>
       </div>
 
       {/* SEARCH BAR */}

@@ -1,15 +1,16 @@
-import { encrypt } from '../middleware/encrypt.js'
+import { encrypt } from '../middleware/encrypt.middleware.js'
 
 export const successhandler = (status, message, data, res) => {
   if (!status) status = 200
+  const encryptedRequest = encrypt({ message, data })
   res.status(status).send({
-    data: encrypt({ message, data }),
+    data: encryptedRequest,
   })
 }
 
 export const errorhandler = (status, error, res) => {
   if (!status) status = 500
   res.status(status).send({
-    data: encrypt({ message }),
+    message: error.message || error,
   })
 }

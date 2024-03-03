@@ -4,15 +4,15 @@ import Home from './Pages/Home.page'
 import { Login } from './Pages/Login.page'
 import Layout from './Layout/Layout'
 import Register from './Pages/Register.page'
+import PageNotFound from './Pages/PageNotFound.page'
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from 'react-toastify'
-import axios from 'axios'
 
 function App() {
-  
   return (
     <>
       <Routes>
+        <Route path="*" element={<PageNotFound />} />
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="/login" element={<Login />} />

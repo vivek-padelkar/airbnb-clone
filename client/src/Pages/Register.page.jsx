@@ -38,12 +38,6 @@ const Register = () => {
         SECRET_KEY
       ).toString()
 
-      // const { data } = await axios.post(
-      //   '/user/register',
-      //   { data: encryptedRequestBody },
-      //   AXIOS_HEADER
-      // )
-
       const { data } = await axiosInstance.post(
         '/user/register',
         requestBody,
