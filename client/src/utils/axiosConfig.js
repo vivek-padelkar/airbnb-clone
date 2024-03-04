@@ -3,6 +3,7 @@ import { encrypt, decrypt } from '../utils/utils.js'
 
 const axiosInstance = axios.create({
   baseURL: 'http://localhost:5002/airbnb/api/v1',
+  // withCredentials: true,
 })
 
 axiosInstance.interceptors.request.use(

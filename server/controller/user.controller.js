@@ -1,10 +1,11 @@
+import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
 import UserModel from '../models/User.js'
 import {
   loginValidationSchema,
   userValidationSchema,
 } from '../validation/user.validation.js'
-import { decrypt } from '../middleware/encrypt.middleware.js'
-import bcrypt from 'bcryptjs'
+
 import { errorhandler, successhandler } from '../utils/responseHandler.js'
 
 export const registerUser = async (req, res) => {
@@ -26,7 +27,15 @@ export const loginUser = async (req, res) => {
     const { email, password } = req.data
     const response = await getUserlogin(email, password)
     if (response) {
-      successhandler(200, 'User Logged successfully', response, res)
+      jwt.sign(
+        { email: response.email, id: response._id },
+        process.env.JWT_SECRET,
+        {},
+        (err, token) => {
+          if (err) throw Error('Error while sigining the')
+          successhandler(200, 'User Logged successfully', {}, res, token)
+        }
+      )
     }
   } catch (error) {
     errorhandler(500, error, res)
