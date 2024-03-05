@@ -1,17 +1,17 @@
 const SECRET_KEY = import.meta.env.VITE_SECRET_KEY
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import CryptoJS from 'crypto-js'
 import { AXIOS_HEADER } from '../constants/constants'
 import axiosInstance from '../utils/axiosConfig'
 import { useNavigate } from 'react-router-dom'
+import { UserContext } from '../user.context'
 
 export const Login = () => {
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
+  const { setUser } = useContext(UserContext)
   function clearFields() {
     setEmail('')
     setPassword('')
@@ -28,7 +28,7 @@ export const Login = () => {
         requestBody,
         AXIOS_HEADER
       )
-      console.log(JSON.stringify(data))
+      setUser(data?.data)
       toast.success(data?.message)
       clearFields()
       navigate('/')

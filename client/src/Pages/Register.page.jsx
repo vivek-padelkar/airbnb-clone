@@ -1,11 +1,9 @@
-import { useRef, useState } from 'react'
+import { useContext, useRef, useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { AXIOS_HEADER } from '../constants/constants'
 import PasswordCheckList from '../components/PasswordCheckList'
-import CryptoJS from 'crypto-js'
-const SECRET_KEY = import.meta.env.VITE_SECRET_KEY
 import { useNavigate } from 'react-router-dom'
 import axiosInstance from '../utils/axiosConfig'
 
@@ -33,11 +31,6 @@ const Register = () => {
         email,
         password,
       }
-      var encryptedRequestBody = CryptoJS.AES.encrypt(
-        JSON.stringify(requestBody),
-        SECRET_KEY
-      ).toString()
-
       const { data } = await axiosInstance.post(
         '/user/register',
         requestBody,

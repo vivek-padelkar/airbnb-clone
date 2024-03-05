@@ -5,7 +5,7 @@ import {
   loginValidationSchema,
   userValidationSchema,
 } from '../validation/user.validation.js'
-
+import { getToken } from '../utils/utils.js'
 import { errorhandler, successhandler } from '../utils/responseHandler.js'
 
 export const registerUser = async (req, res) => {
@@ -27,14 +27,17 @@ export const loginUser = async (req, res) => {
     const { email, password } = req.data
     const response = await getUserlogin(email, password)
     if (response) {
-      jwt.sign(
-        { email: response.email, id: response._id },
-        process.env.JWT_SECRET,
-        {},
-        (err, token) => {
-          if (err) throw Error('Error while sigining the')
-          successhandler(200, 'User Logged successfully', {}, res, token)
-        }
+      const token = await getToken({
+        name: response.name,
+        email: response.email,
+        id: response._id,
+      })
+      successhandler(
+        200,
+        'User Logged successfully',
+        { name: response.name, email: response.email, id: response._id },
+        res,
+        token
       )
     }
   } catch (error) {

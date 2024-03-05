@@ -7,10 +7,11 @@ import Register from './Pages/Register.page'
 import PageNotFound from './Pages/PageNotFound.page'
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from 'react-toastify'
+import { UserContextProvider } from './user.context'
 
 function App() {
   return (
-    <>
+    <UserContextProvider>
       <Routes>
         <Route path="*" element={<PageNotFound />} />
         <Route path="/" element={<Layout />}>
@@ -31,7 +32,7 @@ function App() {
         theme="light"
         transition:Bounce
       />
-    </>
+    </UserContextProvider>
   )
 }
 

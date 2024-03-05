@@ -1,8 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { UserContext } from '../user.context'
+import { useContext } from 'react'
 
 const Home = () => {
-  return <div> Welcome User</div>
+  const { user } = useContext(UserContext)
+  return <div> {`Welcome to VoyageViks ${user?.name || 'user'}!`}</div>
 }
 
 export default Home

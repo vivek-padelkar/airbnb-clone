@@ -1,15 +1,12 @@
 import { encrypt } from '../middleware/encrypt.middleware.js'
 
-export const successhandler = (status, message, data, res, cookie = null) => {
+export const successhandler = (status, message, data, res, token = null) => {
   if (!status) status = 200
   const encryptedRequest = encrypt({ message, data })
-  if (cookie) {
-    res.cookie('token', cookie).send({ data: encryptedRequest })
-  } else {
-    res.status(200).send({
-      data: encryptedRequest,
-    })
-  }
+  res.status(200).send({
+    data: encryptedRequest,
+    authorization: token,
+  })
 }
 
 export const errorhandler = (status, error, res) => {
