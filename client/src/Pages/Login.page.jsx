@@ -6,12 +6,13 @@ import { AXIOS_HEADER } from '../constants/constants'
 import axiosInstance from '../utils/axiosConfig'
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../user.context'
-
+import Loader from '../components/Loader'
 export const Login = () => {
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { setUser } = useContext(UserContext)
+  const [loading, setLoading] = useState(false)
+  const { setUser, setReady, setIsToken } = useContext(UserContext)
   function clearFields() {
     setEmail('')
     setPassword('')
@@ -19,6 +20,8 @@ export const Login = () => {
   const userLogin = async (e) => {
     try {
       e.preventDefault()
+      setLoading(true)
+
       const requestBody = {
         email,
         password,
@@ -28,9 +31,13 @@ export const Login = () => {
         requestBody,
         AXIOS_HEADER
       )
+
       setUser(data?.data)
+      setReady(true)
+      setIsToken(true)
       toast.success(data?.message)
       clearFields()
+      setLoading(false)
       navigate('/')
     } catch (error) {
       toast.error(
@@ -38,6 +45,9 @@ export const Login = () => {
       )
     }
   }
+
+  if (loading) return <Loader />
+
   return (
     <div className="mt-20 mx-auto">
       <h1 className="mb-3 text-center text-4xl">Login</h1>

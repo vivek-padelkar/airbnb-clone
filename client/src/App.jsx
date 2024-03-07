@@ -8,6 +8,8 @@ import PageNotFound from './Pages/PageNotFound.page'
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from 'react-toastify'
 import { UserContextProvider } from './user.context'
+import Account from './Pages/Account.page'
+import Loader from './components/Loader'
 
 function App() {
   return (
@@ -18,6 +20,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/account" element={<Account />} />
         </Route>
       </Routes>
       <ToastContainer

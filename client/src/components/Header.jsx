@@ -1,16 +1,21 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { UserContext } from '../user.context'
+import { useContext } from 'react'
 
 const Header = () => {
+  const { user } = useContext(UserContext)
   return (
     <header className="flex justify-between">
       {/* LOGO */}
-      <div className="logo-container gap-1">
-        <div className="logo-continer__wrapper">
-          <img src={`images/logo.png`} className="logo-continer__logo" />
+      <Link to="/">
+        <div className="logo-container gap-1">
+          <div className="logo-continer__wrapper">
+            <img src={`images/logo.png`} className="logo-continer__logo" />
+          </div>
+          <span className="font-bold text-xl">VoyageViks</span>
         </div>
-        <span className="font-bold text-xl">VoyageViks</span>
-      </div>
+      </Link>
 
       {/* SEARCH BAR */}
       <div className="flex gap-2 align-middle justify-center border border-gray-300 rounded-full py-2 px-4 shadow-md shadow-gray-300">
@@ -51,8 +56,7 @@ const Header = () => {
             />
           </svg>
         </button>
-
-        <Link to={'/login'}>
+        <Link to={user?.name ? `/account` : '/login'}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
@@ -66,6 +70,7 @@ const Header = () => {
             />
           </svg>
         </Link>
+        {user?.name || null}
       </div>
     </header>
   )

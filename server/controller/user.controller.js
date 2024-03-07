@@ -45,6 +45,28 @@ export const loginUser = async (req, res) => {
   }
 }
 
+export const profileDetails = async (req, res) => {
+  try {
+    const email = req.user.email
+    const response = await getProfileDetails(email)
+    successhandler(200, '', response, res)
+  } catch (error) {
+    errorhandler(500, error, res)
+  }
+}
+
+export const getProfileDetails = async (email) => {
+  try {
+    const response = await UserModel.findOne({ email }).select('-password')
+    if (response) {
+      return response.toObject()
+    } else {
+      throw Error('Data not found')
+    }
+  } catch (error) {
+    throw Error(error.message || message)
+  }
+}
 const getUserRegitser = async (name, email, password) => {
   try {
     const data = await UserModel.findOne({ email })

@@ -13,6 +13,7 @@
     "axios": "^1.6.7",
     "bcryptjs": "^2.4.3",
     "crypto-js": "^4.2.0",
+    "ldrs": "^1.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-password-checklist": "^1.5.1",

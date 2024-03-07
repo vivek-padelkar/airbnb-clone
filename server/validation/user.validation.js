@@ -25,3 +25,14 @@ export const loginValidationSchema = async (reqBody) => {
     throw error
   }
 }
+
+export const getProfileValidationSchema = async (reqBody) => {
+  try {
+    const schema = joi.object({
+      email: joi.string().required().email(),
+    })
+    validateSchema(reqBody, schema)
+  } catch (error) {
+    throw error
+  }
+}
