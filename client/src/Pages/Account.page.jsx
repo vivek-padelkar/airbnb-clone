@@ -4,11 +4,11 @@ import { useContext } from 'react'
 import { Navigate } from 'react-router-dom'
 const Account = () => {
   const navigate = useNavigate()
-  const { user, ready, isToken } = useContext(UserContext)
-  if (!isToken) {
-    return <Navigate to="/login" />
-  }
-  if (!ready) return <div>Loadiing.. please wait</div>
+  // const { user, ready, isToken } = useContext(UserContext)
+  // if (!isToken) {
+  //   return <Navigate to="/login" />
+  // }
+  // if (!ready) return <div>Loadiing.. please wait</div>
   return (
     <div>
       <nav className="m-full flex mt-10 gap-4">

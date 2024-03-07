@@ -13,7 +13,7 @@ import Loader from './components/Loader'
 
 function App() {
   return (
-    <UserContextProvider>
+    <>
       <Routes>
         <Route path="*" element={<PageNotFound />} />
         <Route path="/" element={<Layout />}>
@@ -35,7 +35,7 @@ function App() {
         theme="light"
         transition:Bounce
       />
-    </UserContextProvider>
+    </>
   )
 }
 

@@ -1,44 +1,47 @@
-const SECRET_KEY = import.meta.env.VITE_SECRET_KEY
-import { useContext, useState } from 'react'
+import { useState } from 'react'
+import * as userAction from '../actions/user.action'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { AXIOS_HEADER } from '../constants/constants'
-import axiosInstance from '../utils/axiosConfig'
-import { useNavigate } from 'react-router-dom'
-import { UserContext } from '../user.context'
+import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
+
 export const Login = () => {
-  const navigate = useNavigate()
+  const dispatch = useDispatch()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
-  const { setUser, setReady, setIsToken } = useContext(UserContext)
+  const testState = useSelector((state) => state)
+
+  console.log('testing' + JSON.stringify(testState))
+  // console.log('loading' + loading)
+
+  console
   function clearFields() {
     setEmail('')
     setPassword('')
   }
-  const userLogin = async (e) => {
+  const userLogin = (e) => {
     try {
       e.preventDefault()
-      setLoading(true)
-
       const requestBody = {
         email,
         password,
       }
-      const { data } = await axiosInstance.post(
-        '/user/login',
-        requestBody,
-        AXIOS_HEADER
-      )
+      dispatch(userAction.login(requestBody))
 
-      setUser(data?.data)
-      setReady(true)
-      setIsToken(true)
-      toast.success(data?.message)
-      clearFields()
-      setLoading(false)
-      navigate('/')
+      console.log('After dispatch' + JSON.stringify(state))
+      // const { data } = await axiosInstance.post(
+      //   '/user/login',
+      //   requestBody,
+      //   AXIOS_HEADER
+      // )
+
+      // setUser(data?.data)
+      // setReady(true)
+      // setIsToken(true)
+      // toast.success(data?.message)
+      // clearFields()
+      // setLoading(false)
+      // navigate('/')
     } catch (error) {
       toast.error(
         error?.response?.data?.message || 'Something went wrong try again !'
@@ -46,7 +49,7 @@ export const Login = () => {
     }
   }
 
-  if (loading) return <Loader />
+  // if (loading) return <Loader />
 
   return (
     <div className="mt-20 mx-auto">

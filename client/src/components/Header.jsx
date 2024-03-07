@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { UserContext } from '../user.context'
-import { useContext } from 'react'
+// import { UserContext } from '../user.context'
+// import { useContext } from 'react'
 
 const Header = () => {
-  const { user } = useContext(UserContext)
+  // const { user } = useContext(UserContext)
   return (
     <header className="flex justify-between">
       {/* LOGO */}
@@ -56,7 +56,8 @@ const Header = () => {
             />
           </svg>
         </button>
-        <Link to={user?.name ? `/account` : '/login'}>
+        {/* <Link to={user?.name ? `/account` : '/login'}> */}
+        <Link to={'/login'}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
@@ -70,7 +71,7 @@ const Header = () => {
             />
           </svg>
         </Link>
-        {user?.name || null}
+        {'user?.name' || null}
       </div>
     </header>
   )
