@@ -12,12 +12,15 @@ export const login = (requestBody) => async (dispatch) => {
       requestBody,
       AXIOS_HEADER
     )
+    console.log('now i am dipatching success')
     dispatch({
       type: constants.USER_LOGIN_SUCCESS,
       payload: data.data,
     })
-    localStorage.setItem('userInfo', response.data.authorization)
+    console.log('i am data' + data?.data)
+    localStorage.setItem('userInfo', JSON.stringify(data?.data))
   } catch (error) {
+    console.log('dispatching error because ' + error)
     dispatch({
       type: constants.USER_LOGIN_FAIL,
       payload:

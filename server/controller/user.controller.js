@@ -35,9 +35,8 @@ export const loginUser = async (req, res) => {
       successhandler(
         200,
         'User Logged successfully',
-        { name: response.name, email: response.email, id: response._id },
-        res,
-        token
+        { name: response.name, email: response.email, id: response._id, token },
+        res
       )
     }
   } catch (error) {
