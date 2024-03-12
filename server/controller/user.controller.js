@@ -89,6 +89,7 @@ const getUserlogin = async (email, password) => {
     const user = await UserModel.findOne({ email })
     if (user) {
       const data = bcrypt.compareSync(password, user.password) // true
+      if (!data) throw Error('Invalid email or password combination!')
       return user.toObject()
     } else {
       throw Error('Invalid email or password combination!')

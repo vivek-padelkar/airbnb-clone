@@ -12,13 +12,29 @@ export const login = (requestBody) => async (dispatch) => {
       requestBody,
       AXIOS_HEADER
     )
-    console.log('now i am dipatching success')
+    console.log('returning response' + JSON.stringify(data))
     dispatch({
       type: constants.USER_LOGIN_SUCCESS,
       payload: data.data,
     })
     console.log('i am data' + data?.data)
     localStorage.setItem('userInfo', JSON.stringify(data?.data))
+  } catch (error) {
+    console.log('dispatching error because ' + error)
+    dispatch({
+      type: constants.USER_LOGIN_FAIL,
+      payload:
+        error?.response?.data?.message || 'Something went wrong try again !',
+    })
+  }
+}
+
+export const logout = () => async (dispatch) => {
+  try {
+    localStorage.removeItem('userInfo')
+    dispatch({
+      type: constants.USER_LOGOUT,
+    })
   } catch (error) {
     console.log('dispatching error because ' + error)
     dispatch({

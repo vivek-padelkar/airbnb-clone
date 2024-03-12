@@ -12,7 +12,7 @@ const userInfoFromStorege = localStorage.getItem('userInfo')
 localStorage.getItem('')
 
 const initialState = {
-  userLogin: { userinfo: userInfoFromStorege || null },
+  userLogin: { userInfo: userInfoFromStorege || null },
 }
 
 console.log('from store' + JSON.stringify(initialState))

@@ -20,7 +20,9 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/account" element={<Account />} />
+          <Route path="/account/:subpage?" element={<Account />} />
+          {/* <Route path="/account/bookings" element={<Account />} />
+          <Route path="/account/places" element={<Account />} /> */}
         </Route>
       </Routes>
       <ToastContainer

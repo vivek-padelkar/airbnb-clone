@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux'
 
 const Header = () => {
   const userState = useSelector((state) => state.userLogin)
-  console.log('userSatein header' + JSON.stringify(userState?.userinfo?.name))
   return (
     <header className="flex justify-between">
       {/* LOGO */}
@@ -55,11 +54,7 @@ const Header = () => {
             />
           </svg>
         </button>
-        {/* <Link to={user?.name ? `/account` : '/login'}> */}
-        {console.log(
-          'frrrrrrrrom heeeeeeader' + JSON.stringify(userState?.userinfo)
-        )}
-        <Link to={userState?.userinfo?.name ? `/account` : '/login'}>
+        <Link to={userState?.userInfo?.name ? `/account` : '/login'}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
@@ -73,7 +68,7 @@ const Header = () => {
             />
           </svg>
         </Link>
-        {userState?.userinfo?.name || null}
+        {userState?.userInfo?.name || null}
       </div>
     </header>
   )
