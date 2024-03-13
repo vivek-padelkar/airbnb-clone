@@ -15,7 +15,6 @@ const initialState = {
   userLogin: { userInfo: userInfoFromStorege || null },
 }
 
-console.log('from store' + JSON.stringify(initialState))
 const middleware = [thunk]
 
 const store = createStore(

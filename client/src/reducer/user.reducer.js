@@ -1,7 +1,6 @@
 import * as constants from '../constants/ReducerConstants/userReducerConstants'
 
 export const userLoginReducers = (state = {}, action) => {
-  console.log('i am with ' + action.type)
   switch (action.type) {
     case constants.USER_LOGIN_REQUEST:
       return { loading: true }
