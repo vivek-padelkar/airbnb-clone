@@ -1,9 +1,12 @@
 import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
+import path from 'path'
+import { fileURLToPath } from 'url'
+import download from 'image-downloader'
 import UserModel from '../models/User.js'
 import {
   loginValidationSchema,
   userValidationSchema,
+  uploadByLinkSchema,
 } from '../validation/user.validation.js'
 import { getToken } from '../utils/utils.js'
 import { errorhandler, successhandler } from '../utils/responseHandler.js'
@@ -64,6 +67,24 @@ export const getProfileDetails = async (email) => {
     }
   } catch (error) {
     throw Error(error.message || message)
+  }
+}
+
+export const uploadByLink = async (req, res) => {
+  try {
+    await uploadByLinkSchema(req.body)
+    const { uploadLink } = req.body
+    const imageName = `${Date.now()}.jpg`
+    const __dirname = path.dirname(fileURLToPath(import.meta.url))
+    let dest = path.resolve(__dirname, '..', './uploads')
+    dest = `${dest}/${imageName}`
+    await download.image({
+      url: uploadLink,
+      dest,
+    })
+    successhandler(200, '', { imageName }, res)
+  } catch (error) {
+    errorhandler(500, error, res)
   }
 }
 const getUserRegitser = async (name, email, password) => {

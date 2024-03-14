@@ -36,3 +36,14 @@ export const getProfileValidationSchema = async (reqBody) => {
     throw error
   }
 }
+
+export const uploadByLinkSchema = async (reqBody) => {
+  try {
+    const schema = joi.object({
+      uploadLink: joi.string().required(),
+    })
+    validateSchema(reqBody, schema)
+  } catch (error) {
+    throw error
+  }
+}
