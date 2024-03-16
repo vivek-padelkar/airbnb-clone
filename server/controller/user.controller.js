@@ -72,8 +72,8 @@ export const getProfileDetails = async (email) => {
 
 export const uploadByLink = async (req, res) => {
   try {
-    await uploadByLinkSchema(req.body)
-    const { uploadLink } = req.body
+    await uploadByLinkSchema(req.data)
+    const { uploadLink } = req.data
     const imageName = `${Date.now()}.jpg`
     const __dirname = path.dirname(fileURLToPath(import.meta.url))
     let dest = path.resolve(__dirname, '..', './uploads')

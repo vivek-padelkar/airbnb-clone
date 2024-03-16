@@ -1,7 +1,11 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Perks from '../components/Perks'
 import axiosInstance from '../utils/axiosConfig'
+import { toast } from 'react-toastify'
+import { useDispatch, useSelector } from 'react-redux'
+import { uploadFile } from '../actions/uploadPhoto.action.js'
+const UPLOADED_IMAGE_PATH = import.meta.env.VITE_UPLOADED_IMAGE_PATH
 
 const Places = () => {
   const { action } = useParams()
@@ -16,6 +20,10 @@ const Places = () => {
   const [checkIn, setCheckIn] = useState('')
   const [checkOut, setCheckOut] = useState('')
   const [loadUrl, setLoadUrl] = useState(false)
+  const refAddPhotoByLink = useRef()
+  const dispatch = useDispatch()
+
+  // const uploaded
   const checknegativeNumber = (e) => {
     if (e.target.value >= 0) setNoOfGuest(e.target.value)
   }
@@ -37,28 +45,46 @@ const Places = () => {
     )
   }
 
-  const addPhotoByLink = async () => {
+  const addPhotoByLink = async (e) => {
     try {
-      const token = JSON.parse(localStorage.getItem('userInfo')).token
-      console.log('clicked' + JSON.stringify(token))
-      setLoadUrl(true)
-      const AXIOS_HEADER = {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
+      e.preventDefault()
+      if (!photoLink) {
+        toast.error('Photo link cannot be blank !')
+        refAddPhotoByLink.current.focus()
+        return
       }
-      const { data } = await axiosInstance.post(
-        '/user/upload-by-link',
-        {
-          uploadLink: photoLink,
-        },
-        AXIOS_HEADER
-      )
+      const requestObject = {
+        uploadLink: photoLink,
+      }
 
-      console.log('response: ' + JSON.stringify(data))
+      dispatch(uploadFile(requestObject))
+
+      // const token = JSON.parse(localStorage.getItem('userInfo')).token
+      // console.log('clicked' + JSON.stringify(token))
+      // setLoadUrl(true)
+      // const AXIOS_HEADER = {
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      // }
+      // const { data } = await axiosInstance.post(
+      //   '/user/upload-by-link',
+      //   {
+      //     uploadLink: photoLink,
+      //   },
+      //   AXIOS_HEADER
+      // )
+      // setLoadUrl(false)
+      // toast.success('Image uploaded successfully !')
+      // setPhotoLink('')
+      // setAddedPhotos((prev) => {
+      //   return [...prev, data.data.imageName]
+      // })
     } catch (error) {
-      console.log(error)
+      setLoadUrl(true)
+      toast.error(error.message || 'Something went wrong while uploading photo')
+      refAddPhotoByLink.current.focus()
     }
   }
 
@@ -121,6 +147,7 @@ const Places = () => {
                 className="w-full"
                 type="text"
                 placeholder="Add using link... jpeg"
+                ref={refAddPhotoByLink}
                 value={photoLink}
                 onChange={(e) => setPhotoLink(e.target.value)}
               />
@@ -139,7 +166,20 @@ const Places = () => {
                 )}
               </button>
             </div>
-            <div className="mt-2 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 items-center">
+            {/* upload image from device */}
+            <div className="flex flex-col gap-2">
+              <div className="mt-2 grid gap-2 md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-2  items-center">
+                {addedPhotos.length > 0 &&
+                  addedPhotos.map((photo) => (
+                    <div className="h-100 w-100">
+                      <img
+                        className="h-full width-full object-cover"
+                        src={`${UPLOADED_IMAGE_PATH}/${photo}`}
+                        title="hotel room"
+                      />
+                    </div>
+                  ))}
+              </div>
               <button className="flex items-center gap-1 justify-center bg-transparent border border-dotted border-black rounded-2xl p-6 text-xl">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

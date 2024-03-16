@@ -25,6 +25,12 @@ app.use(
     credentials: true,
   })
 )
+
+const uploadFolderPath = path.resolve(__dirname, './uploads')
+console.log(uploadFolderPath)
+
+app.use('/uploads', express.static(uploadFolderPath))
+
 app.use(`${BASE_PATH}/user`, userRoute)
 
 // app.use(encrypt)

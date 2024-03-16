@@ -31,7 +31,6 @@ export const Login = () => {
         password,
       }
       dispatch(userAction.login(requestBody))
-      console.log('After dispatch' + JSON.stringify(userState))
     } catch (error) {
       toast.error(
         error?.response?.data?.message || 'Something went wrong try again !'

@@ -17,7 +17,6 @@ export const login = (requestBody) => async (dispatch) => {
       type: constants.USER_LOGIN_SUCCESS,
       payload: data.data,
     })
-    console.log('i am data' + data?.data)
     localStorage.setItem('userInfo', JSON.stringify(data?.data))
   } catch (error) {
     console.log('dispatching error because ' + error)
